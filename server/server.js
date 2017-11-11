@@ -47,9 +47,22 @@ Todo.findById(id).then((doc)=>{
   return res.status(400).send();
 })
 });
-
-app.listen(port, () => {
-  console.log(`Started on port ${port}`);
+app.delete('/todos/:id', (req, res)=>{
+  var id = req.params.id;
+  if(!ObjectID.isValid(id)){
+    return res.status(400).send('Invalid id, please check the Id');
+  }
+  Todo.findByIdAndRemove('id').then((doc)=>{
+    if(!doc){
+      return res.status(404).send();
+    }
+    res.status(200).send({doc});
+  }).catch((e)=>{
+    return res.status(400).send();
+  });
+});
+app.listen(3000, () => {
+  console.log(`Started on port 3000`);
 });
 
 module.exports = {app};
