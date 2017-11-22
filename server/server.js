@@ -119,8 +119,7 @@ User.findByCredentials(body.email,body.password).then((user)=>{
 
 app.delete('/user/me/token', authenticate,(req,res) => {
     req.user.removeToken(req.token).then(()=>{
-  console.log('Inside delete');
-    res.status(200).send();
+      res.status(200).send();
   }, ()=>{
     res.status(400).send();
   })
